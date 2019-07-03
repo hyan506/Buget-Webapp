@@ -93,6 +93,17 @@ var UIController = (function() {
             document.querySelector(element).insertAdjacentHTML('beforeend',newHtml);
         },
         
+        clearFields: function(){
+            var fields, fieldsarr;
+            fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);  
+            // field is a list now, need to convert it into array
+            fieldsarr = Array.prototype.slice.call(fields);
+            //foreach is a ez version of for, iterate through all element in the array.
+            fieldsarr.forEach(function(current , i , arr){
+                current.value = ""; //current is the field element.
+            });
+            fieldsarr[0].focus();
+        },
         
         
         getDOMstring: function(){
@@ -120,6 +131,15 @@ var controller = (function(budgetCtrl, UICtrl) {
         });
     };
     
+    
+    function updateBudget() {
+        //calculate the budget
+        
+        //return the budget
+        
+        //display it on the web
+    }
+    
     function cntlAddItem(){
         
         var input, newItem
@@ -129,7 +149,8 @@ var controller = (function(budgetCtrl, UICtrl) {
         newItem = budgetCtrl.addItem(input.type, input.description, input.value);
         //add to ui
         UICtrl.addListItem(newItem, input.type);
-        console.log(input);
+        //clear fields
+        UICtrl.clearFields();
     }
     return {
         init: function(){
