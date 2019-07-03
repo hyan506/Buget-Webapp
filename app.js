@@ -71,7 +71,7 @@ var UIController = (function() {
             return{
                type: document.querySelector(DOMstrings.inputType).value, // inc or exp
                description: document.querySelector(DOMstrings.inputDescription).value,
-               value: document.querySelector(DOMstrings.inputValue).value
+               value: parseFloat(document.querySelector(DOMstrings.inputValue).value)
            };
         },
         
@@ -145,12 +145,17 @@ var controller = (function(budgetCtrl, UICtrl) {
         var input, newItem
         //get data from html page
         input = UICtrl.getInput();
-        //add to data stucture
-        newItem = budgetCtrl.addItem(input.type, input.description, input.value);
-        //add to ui
-        UICtrl.addListItem(newItem, input.type);
-        //clear fields
-        UICtrl.clearFields();
+        
+        if(input.description !== "" && !isNaN(input.value) && input.value > 0){
+            //add to data stucture
+            newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+            //add to ui
+            UICtrl.addListItem(newItem, input.type);
+            //clear fields
+            UICtrl.clearFields();
+            //calculate and update budget
+            updateBudget();
+        }
     }
     return {
         init: function(){
